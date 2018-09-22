@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SimpleApiNetwork_Example' do
+  pod 'SimpleApiNetwork', :path => '../'
+
+  target 'SimpleApiNetwork_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
