@@ -1,0 +1,16 @@
+PODS:
+  - SimpleApiNetwork (0.1.0)
+
+DEPENDENCIES:
+  - SimpleApiNetwork (from `../`)
+
+EXTERNAL SOURCES:
+  SimpleApiNetwork:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SimpleApiNetwork: b5f1ca2e13d134079e26fcde947bb8b0d01ebed5
+
+PODFILE CHECKSUM: 07f32fdab81e42244c0db8b0800ee1e85709552b
+
+COCOAPODS: 1.5.2

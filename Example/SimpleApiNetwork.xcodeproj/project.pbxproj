@@ -30,7 +30,7 @@
 /* Begin PBXFileReference section */
 		11CF55929A23A39631974D0E /* Pods_SimpleApiNetwork_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleApiNetwork_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		307F9FF6D74C160941CB665D /* Pods-SimpleApiNetwork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Example/Pods-SimpleApiNetwork_Example.release.xcconfig"; sourceTree = "<group>"; };
-		41833C54FF0DC5F1EAEB68E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		41833C54FF0DC5F1EAEB68E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		49143261BA8630EE63F4980F /* Pods-SimpleApiNetwork_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Tests/Pods-SimpleApiNetwork_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SimpleApiNetwork_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApiNetwork_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,8 +45,8 @@
 		77AF781C91C85B9634C3101B /* Pods_SimpleApiNetwork_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleApiNetwork_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDD02F11B45BF1B4B99FDD7 /* Pods-SimpleApiNetwork_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Tests/Pods-SimpleApiNetwork_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E0DAAA3718FB31013FE31D00 /* Pods-SimpleApiNetwork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Example/Pods-SimpleApiNetwork_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		FCF98D983032BA380A2FA40B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		FF994B7C69B7FFC7787083AB /* SimpleApiNetwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = SimpleApiNetwork.podspec; path = ../SimpleApiNetwork.podspec; sourceTree = "<group>"; };
+		FCF98D983032BA380A2FA40B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		FF994B7C69B7FFC7787083AB /* SimpleApiNetwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SimpleApiNetwork.podspec; path = ../SimpleApiNetwork.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,7 +469,9 @@
 			baseConfigurationReference = E0DAAA3718FB31013FE31D00 /* Pods-SimpleApiNetwork_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SimpleApiNetwork/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -484,7 +486,9 @@
 			baseConfigurationReference = 307F9FF6D74C160941CB665D /* Pods-SimpleApiNetwork_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SimpleApiNetwork/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";

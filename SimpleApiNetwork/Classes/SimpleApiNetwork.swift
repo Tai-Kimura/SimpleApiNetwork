@@ -1,0 +1,201 @@
+//
+//  Network.swift
+//
+//  Created by 木村太一朗 on 2015/02/03.
+//  Copyright (c) 2015年 木村太一朗. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
+
+import UIKit
+
+open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
+    
+    public static var HttpHost: String = "http://localhost:3000"
+    
+    public var request: NSMutableURLRequest?
+    
+    public var response: NSMutableData = NSMutableData()
+    
+    private static var registeringDevice = false
+    
+    private static let singleton = SimpleApiNetwork();
+    
+    private var statusCode: Int = 0
+    
+    override init() {
+        super.init()
+        
+    }
+    
+    public class func sharedInstance() -> SimpleApiNetwork {
+        return singleton;
+    }
+    
+    class func newSession(delegate: URLSessionTaskDelegate? = nil) -> URLSession {
+        let operationQueue = OperationQueue()
+        operationQueue.name = "jp.everconnect.tbj"
+        let session = URLSession(configuration: URLSessionConfiguration.default,
+                                 delegate: delegate == nil ? SimpleApiNetwork.sharedInstance() : delegate!, delegateQueue: operationQueue)
+        return session;
+    }
+    
+    //    MARK: リクエスト
+    
+    @discardableResult public class func getRequest<T1: NetworkResponse, T2: NetworkError>(_ path: String, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, host: String = HttpHost) -> URLSessionDataTask {
+        let url = URL(string: host + path)
+        let request = NSMutableURLRequest(url: url!)
+        request.httpMethod = HttpMethod.get.rawValue
+        request.addValue(getUserAgentName(), forHTTPHeaderField:"User-Agent")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(Locale.current.languageCode ?? "en", forHTTPHeaderField: "Accept-Language")
+        let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler)
+        task.resume()
+        return task
+        
+    }
+    
+    @discardableResult public class func postRequest<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
+        let url = URL(string: host + path)
+        let request = isMultipart ? URLRequestCreator.requestWithMultipleHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!)
+        request.addValue(SimpleApiNetwork.getUserAgentName(), forHTTPHeaderField:"User-Agent")
+        let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler, delegate: delegate)
+        task.resume()
+        return task
+    }
+    
+    private class func handleRequest<T1: NetworkResponse, T2: NetworkError>(_ request: NSMutableURLRequest, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
+        let session = newSession(delegate: delegate);
+        return session.dataTask(with: request as URLRequest, completionHandler: {
+            (data, resp, err) in
+            session.invalidateAndCancel()
+            SimpleApiNetwork.saveCookie()
+            if let error = err {
+                if ((error as NSError).code != NSURLErrorCancelled) {
+                    DispatchQueue.main.async(execute: {
+                        errorHandler?(T2.init(statusCode: .serverError, data: error))
+                    })
+                }
+                return;
+            }
+            if let httpResponse = resp as? HTTPURLResponse, let content = data {
+                if (httpResponse.statusCode == 200 && err == nil) {
+                    do {
+                        let result = try T1.init(data: content)
+                        if checkIfSuccessResponse(result: result) {
+                            DispatchQueue.main.async(execute: {
+                                completionHandler(result)
+                            })
+                        } else {
+                            DispatchQueue.main.async(execute: {
+                                errorHandler?(T2.init(statusCode: .requestSuccess, data: result))
+                            })
+                        }
+                    } catch let error {
+                        errorHandler?(T2.init(statusCode: .requestSuccess, data: error))
+                    }
+                }
+            }
+            DispatchQueue.main.async(execute: {
+                errorHandler?(T2.init(statusCode: HttpStatusCode(rawValue: (resp as? HTTPURLResponse)?.statusCode ?? 0) ?? .serverError, data: data))
+            })
+        })
+    }
+    
+    open class func checkIfSuccessResponse<T: NetworkResponse>(result: T) -> Bool {
+        return true
+    }
+    
+    // MARK: ユーザーエージェント
+    open class func getUserAgentName() -> String {
+        let appVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        let osVersion  = UIDevice.current.systemVersion;
+        let agentName  = "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") ?? "")/\(appVersion) (iOS \(osVersion))";
+        return agentName;
+    }
+    fileprivate func storeCookie(_ httpResponse: HTTPURLResponse) {
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: httpResponse.allHeaderFields as! [String:String], for: httpResponse.url!)
+        for cookie in cookies {
+            HTTPCookieStorage.shared.setCookie(cookie )
+        }
+        _ = HTTPCookieStorage.shared.cookies(for: httpResponse.url!)
+    }
+    
+    
+    //MARK: Cookie stack
+    
+    open class func loadCookie() {
+        if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data {
+            let cookies: [HTTPCookie] = NSKeyedUnarchiver.unarchiveObject(with: cookiesData) as! [HTTPCookie]
+            for  cookie in cookies {
+                HTTPCookieStorage.shared.setCookie(cookie)
+            }
+        }
+    }
+    
+    open class func saveCookie() {
+        // Save the cookies to the user defaults
+        let cookiesData = NSKeyedArchiver.archivedData(withRootObject: HTTPCookieStorage.shared.cookies!)
+        Util.set(object: cookiesData as Any,
+                 forKey:"savedHttpCookie")
+    }
+    
+    
+    public enum HttpMethod: String {
+        case get = "GET"
+        case head = "HEAD"
+        case post = "POST"
+        case options = "OPTIONS"
+        case put = "PUT"
+        case delete = "DELETE"
+        case connect = "CONNECT"
+        case trace = "TRACE"
+        case patch = "PATCH"
+        case link = "LINK"
+        case unlink = "UNLINK"
+    }
+    
+    open class Util {
+        @discardableResult class func set(object: Any, forKey key: String) -> Bool {
+            let userDefault = UserDefaults.standard
+            userDefault.set(object, forKey: key)
+            return userDefault.synchronize()
+        }
+        
+        class func get(key: String) -> Any? {
+            return UserDefaults.standard.object(forKey: key)
+        }
+        
+        class func delete(key: String) {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
+}
+
+
+
+
+
+public enum HttpStatusCode: Int {
+    case serverMaintenance = 503
+    case requestSuccess = 200
+    case notFound = 404
+    case invalidDomain = 410
+    case notAuthorized = 401
+    case serverError = 500
+}

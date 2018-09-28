@@ -1,0 +1,6 @@
+framework module SimpleApiNetwork {
+  umbrella header "SimpleApiNetwork-umbrella.h"
+
+  export *
+  module * { export * }
+}
