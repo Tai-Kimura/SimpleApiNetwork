@@ -36,6 +36,12 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     private static let singleton = SimpleApiNetwork();
     
+    open class var  headers: [String:String] {
+        get {
+            return [String:String]()
+        }
+    }
+    
     private var statusCode: Int = 0
     
     override init() {
@@ -56,24 +62,13 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     }
     
     //    MARK: リクエスト
-    
-    @discardableResult public class func getRequest<T1: NetworkResponse, T2: NetworkError>(_ path: String, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, host: String = HttpHost) -> URLSessionDataTask {
-        let url = URL(string: host + path)
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = HttpMethod.get.rawValue
-        request.addValue(getUserAgentName(), forHTTPHeaderField:"User-Agent")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(Locale.current.languageCode ?? "en", forHTTPHeaderField: "Accept-Language")
-        let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler)
-        task.resume()
-        return task
-        
-    }
-    
-    @discardableResult public class func postRequest<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
+    @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
         let url = URL(string: host + path)
         let request = isMultipart ? URLRequestCreator.requestWithMultipleHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!)
         request.addValue(SimpleApiNetwork.getUserAgentName(), forHTTPHeaderField:"User-Agent")
+        for (key,value) in headers {
+            request.addValue(value, forHTTPHeaderField: key)
+        }
         let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler, delegate: delegate)
         task.resume()
         return task
@@ -128,6 +123,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         let agentName  = "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") ?? "")/\(appVersion) (iOS \(osVersion))";
         return agentName;
     }
+    
     fileprivate func storeCookie(_ httpResponse: HTTPURLResponse) {
         let cookies = HTTPCookie.cookies(withResponseHeaderFields: httpResponse.allHeaderFields as! [String:String], for: httpResponse.url!)
         for cookie in cookies {

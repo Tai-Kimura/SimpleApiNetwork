@@ -38,7 +38,6 @@ open class URLRequestCreator {
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         let header = HTTPCookie.requestHeaderFields(with: cookies!)
         request.allHTTPHeaderFields = header
-        setHeaders()
         request.httpMethod = method.rawValue
         request.httpBody = jsonData
         return request
@@ -62,7 +61,6 @@ open class URLRequestCreator {
         let header = HTTPCookie.requestHeaderFields(with: cookies!)
         request.allHTTPHeaderFields = header
         request.httpMethod = method.rawValue
-        setHeaders()
         request.httpBody = body as Data
         request.timeoutInterval = 300
         return request
@@ -110,9 +108,4 @@ open class URLRequestCreator {
             }
         }
     }
-    
-    open class func setHeaders() {
-        
-    }
-    
 }
