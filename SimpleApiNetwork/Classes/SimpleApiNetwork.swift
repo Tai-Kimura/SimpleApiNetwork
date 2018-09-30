@@ -63,8 +63,18 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     //    MARK: リクエスト
     @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
-        let url = URL(string: host + path)
-        let request = isMultipart ? URLRequestCreator.requestWithMultipleHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!)
+        var endPoint = host + path
+        switch method {
+        case .get,.delete:
+            endPoint += "?"
+            for (key,value) in data {
+                endPoint += "\(key)=\(value)&"
+            }
+        default:
+            break
+        }
+        let url = URL(string: endPoint)
+        let request = isMultipart ? URLRequestCreator.requestWithMultipleHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
         request.addValue(SimpleApiNetwork.getUserAgentName(), forHTTPHeaderField:"User-Agent")
         for (key,value) in headers {
             request.addValue(value, forHTTPHeaderField: key)
@@ -173,11 +183,11 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
             return userDefault.synchronize()
         }
         
-        class func get(key: String) -> Any? {
+        open class func get(key: String) -> Any? {
             return UserDefaults.standard.object(forKey: key)
         }
         
-        class func delete(key: String) {
+        open class func delete(key: String) {
             UserDefaults.standard.removeObject(forKey: key)
         }
     }
@@ -195,3 +205,4 @@ public enum HttpStatusCode: Int {
     case notAuthorized = 401
     case serverError = 500
 }
+

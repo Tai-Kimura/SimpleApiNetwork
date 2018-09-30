@@ -28,18 +28,22 @@ open class URLRequestCreator {
     
     open class func requestWithHttpRequestResource(dataToSend params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
         //JSON形式にparse
-        let jsonData: Data?
-        do {
-            jsonData = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-        } catch  _ as NSError {
-            jsonData = nil
-        }
         let request = NSMutableURLRequest(url: url)
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         let header = HTTPCookie.requestHeaderFields(with: cookies!)
         request.allHTTPHeaderFields = header
         request.httpMethod = method.rawValue
-        request.httpBody = jsonData
+        switch method {
+        case .post,.put,.patch:
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
+                request.httpBody = jsonData
+            } catch  _ as NSError {
+            }
+        default:
+            break
+        }
+        
         return request
     }
     
@@ -109,3 +113,4 @@ open class URLRequestCreator {
         }
     }
 }
+
