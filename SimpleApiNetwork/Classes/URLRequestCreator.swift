@@ -26,6 +26,8 @@ import UIKit
 
 open class URLRequestCreator {
     
+    public static var boundary = "_insert_some_boundary_here_"
+    
     open class func requestWithHttpRequestResource(dataToSend params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
         //JSON形式にparse
         let request = NSMutableURLRequest(url: url)
@@ -48,7 +50,7 @@ open class URLRequestCreator {
     }
     
     open class func requestWithMultipartHttpRequestResource(_ params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
-        let boundary = "_insert_some_boundary_here_"
+        
         var body = NSMutableData()
         //エンコーディング
         body.append(("--\(boundary)\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
@@ -112,4 +114,3 @@ open class URLRequestCreator {
         }
     }
 }
-
