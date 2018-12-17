@@ -102,7 +102,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
                         errorHandler?(T2.init(statusCode: .serverError, data: error))
                     })
                 }
-                return;
+                return
             }
             if let httpResponse = resp as? HTTPURLResponse, let content = data {
                 if (httpResponse.statusCode == 200 && err == nil) {
@@ -120,6 +120,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
                     } catch let error {
                         errorHandler?(T2.init(statusCode: .requestSuccess, data: error))
                     }
+                    return
                 }
             }
             DispatchQueue.main.async(execute: {
