@@ -28,6 +28,10 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     public static var HttpHost: String = "http://localhost:3000"
     
+    public static var defaultTimeout: TimeInterval = 30
+    
+    public static var defaultMultipartTimeout: TimeInterval = 60
+    
     public var request: NSMutableURLRequest?
     
     public var response: NSMutableData = NSMutableData()
@@ -62,7 +66,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     }
     
     //    MARK: リクエスト
-    @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
+    @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
         var endPoint = host + path
         switch method {
         case .get,.delete:
@@ -74,11 +78,13 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
             break
         }
         let url = URL(string: endPoint)
-        let request = isMultipart ? URLRequestCreator.requestWithMultipleHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
+        let request = isMultipart ? URLRequestCreator.requestWithMultipartHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
         request.addValue(SimpleApiNetwork.getUserAgentName(), forHTTPHeaderField:"User-Agent")
+        
         for (key,value) in headers {
             request.addValue(value, forHTTPHeaderField: key)
         }
+        request.timeoutInterval = timeout ?? (isMultipart ? defaultMultipartTimeout : defaultTimeout)
         let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler, delegate: delegate)
         task.resume()
         return task

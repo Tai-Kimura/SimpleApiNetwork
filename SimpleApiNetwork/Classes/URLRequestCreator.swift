@@ -47,7 +47,7 @@ open class URLRequestCreator {
         return request
     }
     
-    open class func requestWithMultipleHttpRequestResource(_ params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
+    open class func requestWithMultipartHttpRequestResource(_ params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
         let boundary = "_insert_some_boundary_here_"
         var body = NSMutableData()
         //エンコーディング
@@ -66,7 +66,6 @@ open class URLRequestCreator {
         request.allHTTPHeaderFields = header
         request.httpMethod = method.rawValue
         request.httpBody = body as Data
-        request.timeoutInterval = 300
         return request
     }
     
