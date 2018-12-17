@@ -118,7 +118,9 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
                             })
                         }
                     } catch let error {
-                        errorHandler?(T2.init(statusCode: .requestSuccess, data: error))
+                        DispatchQueue.main.async(execute: {
+                            errorHandler?(T2.init(statusCode: .requestSuccess, data: error))
+                        })
                     }
                     return
                 }
