@@ -8,7 +8,7 @@ import Foundation
 
 public extension Data {
     
-    public var mimeType: DataMimeType {
+    var mimeType: DataMimeType {
         let bytes = self.bytes
         if bytes.count == 0 {
             return .none
@@ -34,7 +34,7 @@ public extension Data {
         }
     }
     
-    public var bytes: Array<UInt8> {
+    var bytes: Array<UInt8> {
         return Array(self)
     }
 }

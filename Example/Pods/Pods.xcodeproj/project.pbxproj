@@ -17,6 +17,8 @@
 		B628CC35215DF18D006530D6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC33215DF18D006530D6 /* NetworkError.swift */; };
 		B628CC3A215DFCBA006530D6 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC39215DFCBA006530D6 /* NetworkResponse.swift */; };
 		B628CC3B215DFCBA006530D6 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC39215DFCBA006530D6 /* NetworkResponse.swift */; };
+		B641D1B522D6BF090059DECB /* WeakURLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D1B422D6BF090059DECB /* WeakURLTask.swift */; };
+		B641D1B622D6C0710059DECB /* WeakURLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B641D1B422D6BF090059DECB /* WeakURLTask.swift */; };
 		B665788921561C4600345420 /* URLRequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665788721561C4500345420 /* URLRequestCreator.swift */; };
 		B665788A21561C4600345420 /* URLRequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665788721561C4500345420 /* URLRequestCreator.swift */; };
 		B665788B21561C4600345420 /* SimpleApiNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665788821561C4500345420 /* SimpleApiNetwork.swift */; };
@@ -74,6 +76,7 @@
 		B4428D84F477D3FEA11EA618BBB5993C /* Pods-SimpleApiNetwork_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleApiNetwork_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		B628CC33215DF18D006530D6 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkError.swift; path = SimpleApiNetwork/Classes/NetworkError.swift; sourceTree = "<group>"; };
 		B628CC39215DFCBA006530D6 /* NetworkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkResponse.swift; path = SimpleApiNetwork/Classes/NetworkResponse.swift; sourceTree = "<group>"; };
+		B641D1B422D6BF090059DECB /* WeakURLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakURLTask.swift; sourceTree = "<group>"; };
 		B665788721561C4500345420 /* URLRequestCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLRequestCreator.swift; path = SimpleApiNetwork/Classes/URLRequestCreator.swift; sourceTree = "<group>"; };
 		B665788821561C4500345420 /* SimpleApiNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleApiNetwork.swift; path = SimpleApiNetwork/Classes/SimpleApiNetwork.swift; sourceTree = "<group>"; };
 		B665789321561E1000345420 /* SimpleApiFileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleApiFileData.swift; path = SimpleApiNetwork/Classes/SimpleApiFileData.swift; sourceTree = "<group>"; };
@@ -121,12 +124,13 @@
 		1A77F1FAE0984B640D63577450946EF9 /* SimpleApiNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				B628CC39215DFCBA006530D6 /* NetworkResponse.swift */,
-				B628CC33215DF18D006530D6 /* NetworkError.swift */,
 				B665789421561E1000345420 /* DataExtension.swift */,
-				B665788821561C4500345420 /* SimpleApiNetwork.swift */,
+				B628CC33215DF18D006530D6 /* NetworkError.swift */,
+				B628CC39215DFCBA006530D6 /* NetworkResponse.swift */,
 				B665789321561E1000345420 /* SimpleApiFileData.swift */,
+				B665788821561C4500345420 /* SimpleApiNetwork.swift */,
 				B665788721561C4500345420 /* URLRequestCreator.swift */,
+				B641D1B422D6BF090059DECB /* WeakURLTask.swift */,
 				65B497480BB11D4872272F0EC0958429 /* Pod */,
 				6504825D90AB988FD81145B56ACD12DB /* Support Files */,
 			);
@@ -338,22 +342,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				TargetAttributes = {
 					992E5F047AF37D61CA7C1644AFF2F7AE = {
 						LastSwiftMigration = 0940;
 					};
 					D1AFBC6696D0C986EA6EADA5DD0BBE0C = {
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
 			productRefGroup = 97165CD16CDE6B2F2DBDA9473E79C204 /* Products */;
@@ -374,6 +379,7 @@
 			files = (
 				B665789621561E1000345420 /* SimpleApiFileData.swift in Sources */,
 				B665788A21561C4600345420 /* URLRequestCreator.swift in Sources */,
+				B641D1B622D6C0710059DECB /* WeakURLTask.swift in Sources */,
 				B628CC3B215DFCBA006530D6 /* NetworkResponse.swift in Sources */,
 				D3965DFB6CA4DF5BE3224110AA212EB2 /* SimpleApiNetwork-dummy.m in Sources */,
 				B665788C21561C4600345420 /* SimpleApiNetwork.swift in Sources */,
@@ -396,6 +402,7 @@
 			files = (
 				B665789521561E1000345420 /* SimpleApiFileData.swift in Sources */,
 				B665788921561C4600345420 /* URLRequestCreator.swift in Sources */,
+				B641D1B522D6BF090059DECB /* WeakURLTask.swift in Sources */,
 				B628CC3A215DFCBA006530D6 /* NetworkResponse.swift in Sources */,
 				D195F8B212C2FC0507AB68F6ADFF91E2 /* Pods-SimpleApiNetwork_Example-dummy.m in Sources */,
 				B665788B21561C4600345420 /* SimpleApiNetwork.swift in Sources */,
@@ -493,6 +500,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -630,6 +638,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -680,6 +689,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
@@ -710,7 +720,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -743,7 +753,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

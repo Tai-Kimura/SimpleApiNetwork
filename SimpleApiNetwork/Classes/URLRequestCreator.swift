@@ -37,10 +37,12 @@ open class URLRequestCreator {
         request.httpMethod = method.rawValue
         switch method {
         case .post,.put,.patch:
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-                request.httpBody = jsonData
-            } catch  _ as NSError {
+            if let params  = params {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
+                    request.httpBody = jsonData
+                } catch  _ as NSError {
+                }
             }
         default:
             break

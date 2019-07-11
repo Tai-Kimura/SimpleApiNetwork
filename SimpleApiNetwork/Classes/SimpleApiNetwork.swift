@@ -32,6 +32,8 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     public static var defaultMultipartTimeout: TimeInterval = 60
     
+    private static var tasks = [String:[WeakURLTask]]()
+    
     public var request: NSMutableURLRequest?
     
     public var response: NSMutableData = NSMutableData()
@@ -57,6 +59,20 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         return singleton;
     }
     
+    public static func addTask(task: WeakURLTask, for key: String) {
+        var group = tasks[key] ?? [WeakURLTask]()
+        group.append(task)
+    }
+    
+    public static func cancelTask(task: WeakURLTask, for key: String) {
+        if let group = tasks[key] {
+            for task in group {
+                task.get?.cancel()
+            }
+            tasks[key] = nil
+        }
+    }
+    
     class func newSession(delegate: URLSessionTaskDelegate? = nil) -> URLSession {
         let operationQueue = OperationQueue()
         operationQueue.name = "jp.everconnect.tbj"
@@ -66,7 +82,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     }
     
     //    MARK: リクエスト
-    @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, contentType: String? = nil, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
+    @discardableResult public class func request<T1: NetworkResponse, T2: NetworkError>(_ path: String, dataToSend data: [String : Any]!, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, method: HttpMethod = .post, isMultipart: Bool = false, contentType: String? = nil, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil) -> WeakURLTask {
         var endPoint = host + path
         switch method {
         case .get,.delete:
@@ -93,7 +109,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         request.timeoutInterval = timeout ?? (isMultipart ? defaultMultipartTimeout : defaultTimeout)
         let task = handleRequest(request, completionHandler: completionHandler, errorHandler: errorHandler, delegate: delegate)
         task.resume()
-        return task
+        return WeakURLTask(task: task)
     }
     
     private class func handleRequest<T1: NetworkResponse, T2: NetworkError>(_ request: NSMutableURLRequest, completionHandler:@escaping (T1)->Void, errorHandler:((_ errors: T2) -> Void)? = nil, delegate: URLSessionTaskDelegate? = nil) -> URLSessionDataTask {
