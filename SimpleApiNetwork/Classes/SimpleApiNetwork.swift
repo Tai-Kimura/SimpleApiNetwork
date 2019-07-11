@@ -64,7 +64,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         group.append(task)
     }
     
-    public static func cancelTask(task: WeakURLTask, for key: String) {
+    public static func cancelTasks(for key: String) {
         if let group = tasks[key] {
             for task in group {
                 task.get?.cancel()
