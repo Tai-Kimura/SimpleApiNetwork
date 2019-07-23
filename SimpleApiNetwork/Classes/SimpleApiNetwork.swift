@@ -42,6 +42,8 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     private static let singleton = SimpleApiNetwork();
     
+    private static var userAgent = getUserAgentName()
+    
     open class var  headers: [String:String] {
         get {
             return [String:String]()
@@ -73,6 +75,10 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         }
     }
     
+    public static func setUserAgent(userAgent: String) {
+        SimpleApiNetwork.userAgent = userAgent
+    }
+    
     class func newSession(delegate: URLSessionTaskDelegate? = nil) -> URLSession {
         let operationQueue = OperationQueue()
         operationQueue.name = "jp.everconnect.tbj"
@@ -95,7 +101,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         }
         let url = URL(string: endPoint)
         let request = isMultipart ? URLRequestCreator.requestWithMultipartHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
-        request.addValue(SimpleApiNetwork.getUserAgentName(), forHTTPHeaderField:"User-Agent")
+        request.addValue(SimpleApiNetwork.userAgent, forHTTPHeaderField:"User-Agent")
         if let contentType = contentType {
             request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         }else if isMultipart {
