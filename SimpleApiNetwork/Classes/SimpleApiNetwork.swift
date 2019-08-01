@@ -81,7 +81,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     class func newSession(delegate: URLSessionTaskDelegate? = nil) -> URLSession {
         let operationQueue = OperationQueue()
-        operationQueue.name = "jp.everconnect.tbj"
+        operationQueue.name = "com.tanosys.simple_api_network"
         let session = URLSession(configuration: URLSessionConfiguration.default,
                                  delegate: delegate == nil ? SimpleApiNetwork.sharedInstance() : delegate!, delegateQueue: operationQueue)
         return session;
