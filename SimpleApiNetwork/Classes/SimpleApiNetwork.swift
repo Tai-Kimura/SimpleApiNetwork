@@ -200,9 +200,17 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     open class func saveCookie() {
         // Save the cookies to the user defaults
-        let cookiesData = NSKeyedArchiver.archivedData(withRootObject: HTTPCookieStorage.shared.cookies!)
-        Util.set(object: cookiesData as Any,
-                 forKey:"savedHttpCookie")
+        if #available(iOS 11.0, *) {
+            guard let cookies = HTTPCookieStorage.shared.cookies, let cookiesData = try? NSKeyedArchiver.archivedData(withRootObject: cookies, requiringSecureCoding: true) else {
+                return
+            }
+            Util.set(object: cookiesData as Any,
+                     forKey:"savedHttpCookie")
+        } else {
+            let cookiesData = NSKeyedArchiver.archivedData(withRootObject: HTTPCookieStorage.shared.cookies!)
+            Util.set(object: cookiesData as Any,
+                     forKey:"savedHttpCookie")
+        }
     }
     
     
