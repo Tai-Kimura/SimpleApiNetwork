@@ -112,6 +112,12 @@ open class URLRequestCreator {
                 body.append(("Content-Type: application/json\r\n\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
                 body.append(("\(value)" as NSString).data(using: String.Encoding.utf8.rawValue)!)
                 body.append(("\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
+            } else if value as? NSNull != nil {
+                //nilパラメーター
+                body.append(("--\(boundary)\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
+                body.append(("Content-Disposition: form-data; name=\"\(name)\";" as NSString).data(using: String.Encoding.utf8.rawValue)!)
+                body.append(("Content-Type: application/json\r\n\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
+                body.append(("\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
             }
         }
     }
