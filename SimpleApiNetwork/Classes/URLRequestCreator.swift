@@ -105,7 +105,7 @@ open class URLRequestCreator {
                     body.append(fileData.data)
                     body.append(("\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
                 }
-            } else if value as? String != nil || value as? Int != nil || value as? Float != nil || value as? TimeInterval != nil {
+            } else if value as? String != nil || value as? Int != nil || value as? Float != nil || value as? TimeInterval != nil || value as? Bool != nil {
                 //通常パラメーター
                 body.append(("--\(boundary)\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
                 body.append(("Content-Disposition: form-data; name=\"\(name)\";" as NSString).data(using: String.Encoding.utf8.rawValue)!)
