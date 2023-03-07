@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SimpleApiNetwork'
-  s.version          = '1.1.5'
+  s.version          = '1.1.6'
   s.summary          = 'A short description of SimpleApiNetwork.'
 
 # This description is used to generate tags and improve search results.
@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.swift_version = '5.0'
 
   s.source_files = 'SimpleApiNetwork/Classes/**/*'
-  s.user_target_xcconfig = {"CODE_SIGNING_ALLOWED": "NO", "CODE_SIGNING_REQUIRED": "NO"}
+  s.pod_target_xcconfig = {"CODE_SIGNING_ALLOWED": "NO", "CODE_SIGNING_REQUIRED": "NO"}
   
   # s.resource_bundles = {
   #   'SimpleApiNetwork' => ['SimpleApiNetwork/Assets/*.png']
