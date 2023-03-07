@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.swift_version = '5.0'
 
   s.source_files = 'SimpleApiNetwork/Classes/**/*'
-  s.user_target_xcconfig = {"CODE_SIGNING_REQUIRED": "NO"}
+  s.user_target_xcconfig = {"GENERATE_INFOPLIST_FILE": "YES"}
   
   # s.resource_bundles = {
   #   'SimpleApiNetwork' => ['SimpleApiNetwork/Assets/*.png']
