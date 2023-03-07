@@ -44,6 +44,8 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     private static var userAgent = getUserAgentName()
     
+    private static var taskQueue = DispatchQueue(label: "task_queue", attributes: .concurrent)
+    
     open class var  headers: [String:String] {
         get {
             return [String:String]()
@@ -62,16 +64,20 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     }
     
     public static func addTask(task: WeakURLTask, for key: String) {
-        var group = tasks[key] ?? [WeakURLTask]()
-        group.append(task)
+        taskQueue.async {
+            var group = tasks[key] ?? [WeakURLTask]()
+            group.append(task)
+        }
     }
     
     public static func cancelTasks(for key: String) {
-        if let group = tasks[key] {
-            for task in group {
-                task.get?.cancel()
+        taskQueue.async {
+            if let group = tasks[key] {
+                for task in group {
+                    task.get?.cancel()
+                }
+                tasks[key] = nil
             }
-            tasks[key] = nil
         }
     }
     
