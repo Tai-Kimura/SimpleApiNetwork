@@ -67,6 +67,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         taskQueue.async {
             var group = tasks[key] ?? [WeakURLTask]()
             group.append(task)
+            tasks[key] = group
         }
     }
     
