@@ -44,7 +44,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     private static var userAgent = getUserAgentName()
     
-    private static var taskQueue = DispatchQueue(label: "task_queue", attributes: .concurrent)
+    private static var taskQueue = DispatchQueue(label: "task_queue")
     
     open class var  headers: [String:String] {
         get {
