@@ -190,34 +190,20 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     //MARK: Cookie stack
     
     open class func loadCookie() {
-        if #available(iOS 9.0, *) {
-            if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data, let cookies: [HTTPCookie] = (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(cookiesData)) as? [HTTPCookie] {
-                for  cookie in cookies {
-                    HTTPCookieStorage.shared.setCookie(cookie)
-                }
-            }
-        } else {
-            if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data, let cookies: [HTTPCookie] = NSKeyedUnarchiver.unarchiveObject(with: cookiesData) as? [HTTPCookie] {
-                for  cookie in cookies {
-                    HTTPCookieStorage.shared.setCookie(cookie)
-                }
+        if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data, let cookies: [HTTPCookie] = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [], from: cookiesData)) as? [HTTPCookie] {
+            for  cookie in cookies {
+                HTTPCookieStorage.shared.setCookie(cookie)
             }
         }
     }
     
     open class func saveCookie() {
         // Save the cookies to the user defaults
-        if #available(iOS 11.0, *) {
-            guard let cookies = HTTPCookieStorage.shared.cookies, let cookiesData = try? NSKeyedArchiver.archivedData(withRootObject: cookies, requiringSecureCoding: true) else {
-                return
-            }
-            Util.set(object: cookiesData as Any,
-                     forKey:"savedHttpCookie")
-        } else {
-            let cookiesData = NSKeyedArchiver.archivedData(withRootObject: HTTPCookieStorage.shared.cookies!)
-            Util.set(object: cookiesData as Any,
-                     forKey:"savedHttpCookie")
+        guard let cookies = HTTPCookieStorage.shared.cookies, let cookiesData = try? NSKeyedArchiver.archivedData(withRootObject: cookies, requiringSecureCoding: true) else {
+            return
         }
+        Util.set(object: cookiesData as Any,
+                 forKey:"savedHttpCookie")
     }
     
     
@@ -264,5 +250,3 @@ public enum HttpStatusCode: Int {
     case notAuthorized = 401
     case serverError = 500
 }
-
-
