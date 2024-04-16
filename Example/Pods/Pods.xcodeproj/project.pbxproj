@@ -13,6 +13,8 @@
 		3D9118B25B0E45D18EA348A4A56FF21D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		5A4811902FB4C6006B262A0C975B71E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		A748E37B3EF21E0255875292886EB919 /* Pods-SimpleApiNetwork_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B99D4306133DDD15F67E5745715134 /* Pods-SimpleApiNetwork_Tests-dummy.m */; };
+		B618AFD32BCF27C500653927 /* CodableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618AFD22BCF27C500653927 /* CodableResponse.swift */; };
+		B618AFD42BCF27C500653927 /* CodableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618AFD22BCF27C500653927 /* CodableResponse.swift */; };
 		B628CC34215DF18D006530D6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC33215DF18D006530D6 /* NetworkError.swift */; };
 		B628CC35215DF18D006530D6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC33215DF18D006530D6 /* NetworkError.swift */; };
 		B628CC3A215DFCBA006530D6 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B628CC39215DFCBA006530D6 /* NetworkResponse.swift */; };
@@ -74,6 +76,7 @@
 		A49292E722DAAEBC7D7F5888171B7B7E /* SimpleApiNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleApiNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB810F3D953E1466DB0A65CF8C12FEE6 /* SimpleApiNetwork-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimpleApiNetwork-umbrella.h"; sourceTree = "<group>"; };
 		B4428D84F477D3FEA11EA618BBB5993C /* Pods-SimpleApiNetwork_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleApiNetwork_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		B618AFD22BCF27C500653927 /* CodableResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableResponse.swift; sourceTree = "<group>"; };
 		B628CC33215DF18D006530D6 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkError.swift; path = SimpleApiNetwork/Classes/NetworkError.swift; sourceTree = "<group>"; };
 		B628CC39215DFCBA006530D6 /* NetworkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkResponse.swift; path = SimpleApiNetwork/Classes/NetworkResponse.swift; sourceTree = "<group>"; };
 		B641D1B722D6C4D80059DECB /* WeakURLTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeakURLTask.swift; path = SimpleApiNetwork/Classes/WeakURLTask.swift; sourceTree = "<group>"; };
@@ -124,6 +127,7 @@
 		1A77F1FAE0984B640D63577450946EF9 /* SimpleApiNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				B618AFD22BCF27C500653927 /* CodableResponse.swift */,
 				B665789421561E1000345420 /* DataExtension.swift */,
 				B628CC33215DF18D006530D6 /* NetworkError.swift */,
 				B628CC39215DFCBA006530D6 /* NetworkResponse.swift */,
@@ -385,6 +389,7 @@
 				B665788C21561C4600345420 /* SimpleApiNetwork.swift in Sources */,
 				B665789821561E1000345420 /* DataExtension.swift in Sources */,
 				B628CC35215DF18D006530D6 /* NetworkError.swift in Sources */,
+				B618AFD42BCF27C500653927 /* CodableResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +413,7 @@
 				B665788B21561C4600345420 /* SimpleApiNetwork.swift in Sources */,
 				B665789721561E1000345420 /* DataExtension.swift in Sources */,
 				B628CC34215DF18D006530D6 /* NetworkError.swift in Sources */,
+				B618AFD32BCF27C500653927 /* CodableResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

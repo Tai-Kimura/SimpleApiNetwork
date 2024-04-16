@@ -166,6 +166,56 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         })
     }
     
+    @discardableResult public class func asyncRequest<T: Codable>(_ path: String, dataToSend data: [String : Any]!, method: HttpMethod = .post, isMultipart: Bool = false, contentType: String? = nil, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil) async throws -> CodableResponse<T>? {
+        var endPoint = host + path
+        switch method {
+        case .get,.delete:
+            endPoint += "?"
+            for (key,value) in data {
+                endPoint += "\(key)=\(value)&"
+            }
+        default:
+            break
+        }
+        let url = URL(string: endPoint)
+        let request = isMultipart ? URLRequestCreator.requestWithMultipartHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
+        request.addValue(SimpleApiNetwork.userAgent, forHTTPHeaderField:"User-Agent")
+        if let contentType = contentType {
+            request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+        }else if isMultipart {
+            request.setValue("multipart/form-data; boundary=\(URLRequestCreator.boundary)", forHTTPHeaderField: "Content-Type")
+        } else {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+        for (key,value) in headers {
+            request.addValue(value, forHTTPHeaderField: key)
+        }
+        request.timeoutInterval = timeout ?? (isMultipart ? defaultMultipartTimeout : defaultTimeout)
+        return try await handleAsyncRequest(request, delegate: delegate)
+    }
+    
+    private class func handleAsyncRequest<T: Codable>(_ request: NSMutableURLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> CodableResponse<T>? {
+        let session = newSession(delegate: delegate)
+        do {
+            let (data, resp) = try await session.data(for: request as URLRequest)
+            session.invalidateAndCancel()
+            SimpleApiNetwork.saveCookie()
+            if let httpResponse = resp as? HTTPURLResponse {
+                do {
+                    return try CodableResponse<T>.init(data: data, statusCode: HttpStatusCode(rawValue: httpResponse.statusCode) ?? HttpStatusCode.unKnown)
+                } catch let error {
+                    throw error
+                }
+            }
+        } catch let err {
+            session.invalidateAndCancel()
+            if (err as NSError).code != NSURLErrorCancelled {
+                throw err
+            }
+        }
+        return nil
+    }
+    
     open class func checkIfSuccessResponse<T: NetworkResponse>(result: T) -> Bool {
         return true
     }
@@ -249,4 +299,5 @@ public enum HttpStatusCode: Int {
     case invalidDomain = 410
     case notAuthorized = 401
     case serverError = 500
+    case unKnown = -1
 }
