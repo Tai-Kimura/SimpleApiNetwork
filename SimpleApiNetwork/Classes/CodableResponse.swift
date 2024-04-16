@@ -8,8 +8,8 @@
 import Foundation
 
 public class CodableResponse<T: Codable> {
-    let response: T
-    let status: HttpStatusCode
+    public let response: T
+    public let status: HttpStatusCode
     
     init(data: Data, statusCode: HttpStatusCode) throws {
         status = statusCode
