@@ -26,27 +26,27 @@ import UIKit
 
 open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
-    public static var HttpHost: String = "http://localhost:3000"
+    nonisolated(unsafe) public static var HttpHost: String = "http://localhost:3000"
     
-    public static var defaultTimeout: TimeInterval = 30
+    nonisolated(unsafe) public static var defaultTimeout: TimeInterval = 30
     
-    public static var defaultMultipartTimeout: TimeInterval = 60
+    nonisolated(unsafe) public static var defaultMultipartTimeout: TimeInterval = 60
     
-    private static var tasks = [String:[WeakURLTask]]()
+    nonisolated(unsafe) private static var tasks = [String:[WeakURLTask]]()
     
     public var request: NSMutableURLRequest?
     
     public var response: NSMutableData = NSMutableData()
     
-    private static var registeringDevice = false
+    nonisolated(unsafe) private static var registeringDevice = false
     
     private static let singleton = SimpleApiNetwork();
     
-    private static var userAgent = getUserAgentName()
+    nonisolated(unsafe) private static var userAgent = getUserAgentName()
     
-    private static var taskQueue = DispatchQueue(label: "task_queue")
+    nonisolated(unsafe) private static var taskQueue = DispatchQueue(label: "task_queue")
     
-    open class var  headers: [String:String] {
+    nonisolated(unsafe) open class var  headers: [String:String] {
         get {
             return [String:String]()
         }
