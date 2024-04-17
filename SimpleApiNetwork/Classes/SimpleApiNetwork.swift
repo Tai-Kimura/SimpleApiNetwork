@@ -266,7 +266,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     }
     
     
-    public enum HttpMethod: String {
+    public enum HttpMethod: String , Sendable{
         case get = "GET"
         case head = "HEAD"
         case post = "POST"
@@ -301,7 +301,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
 
 
 
-public enum HttpStatusCode: Int {
+public enum HttpStatusCode: Int, Sendable {
     case serverMaintenance = 503
     case requestSuccess = 200
     case notFound = 404
