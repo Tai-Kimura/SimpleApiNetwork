@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class SimpleApiFileData {
+open class SimpleApiFileData: @unchecked Sendable {
     public var data: Data
     public var fileName: String
     
