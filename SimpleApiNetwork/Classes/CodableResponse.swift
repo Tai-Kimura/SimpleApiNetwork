@@ -21,7 +21,7 @@ public class CodableResponse<T: Codable> {
         }
     }
     
-    init(response: T, statusCode: HttpStatusCode) {
+    public required init(response: T, statusCode: HttpStatusCode) {
         self.response = response
         self.status = statusCode
     }
