@@ -95,9 +95,9 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         SimpleApiNetwork.userAgent = userAgent
     }
     
-    class func newSession(delegate: URLSessionTaskDelegate? = nil) -> URLSession {
+    class func newSession(delegate: URLSessionTaskDelegate? = nil, tag: String = "com.tanosys.simple_api_network") -> URLSession {
         let operationQueue = OperationQueue()
-        operationQueue.name = "com.tanosys.simple_api_network"
+        operationQueue.name = tag
         let session = URLSession(configuration: URLSessionConfiguration.default,
                                  delegate: delegate == nil ? SimpleApiNetwork.sharedInstance() : delegate!, delegateQueue: operationQueue)
         return session;
@@ -175,7 +175,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
         })
     }
     
-    @discardableResult public class func asyncRequest<T: Codable>(_ path: String, dataToSend data: [String : Any]!, method: HttpMethod = .post, isMultipart: Bool = false, contentType: String? = nil, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil) async throws -> CodableResponse<T>? {
+    @discardableResult public class func asyncRequest<T: Codable>(_ path: String, dataToSend data: [String : Any]!, method: HttpMethod = .post, isMultipart: Bool = false, contentType: String? = nil, host: String = HttpHost, timeout: TimeInterval? = nil, delegate: URLSessionTaskDelegate? = nil, tag: String = "com.tanosys.simple_api_network") async throws -> CodableResponse<T>? {
         var endPoint = host + path
         switch method {
         case .get,.delete:
@@ -200,11 +200,11 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
             request.addValue(value, forHTTPHeaderField: key)
         }
         request.timeoutInterval = timeout ?? (isMultipart ? defaultMultipartTimeout : defaultTimeout)
-        return try await handleAsyncRequest(request, delegate: delegate)
+        return try await handleAsyncRequest(request, delegate: delegate, tag: tag)
     }
     
-    private class func handleAsyncRequest<T: Codable>(_ request: NSMutableURLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> CodableResponse<T>? {
-        let session = newSession(delegate: delegate)
+    private class func handleAsyncRequest<T: Codable>(_ request: NSMutableURLRequest, delegate: URLSessionTaskDelegate? = nil, tag: String) async throws -> CodableResponse<T>? {
+        let session = newSession(delegate: delegate, tag: tag)
         do {
             let (data, resp) = try await session.data(for: request as URLRequest)
             session.invalidateAndCancel()
