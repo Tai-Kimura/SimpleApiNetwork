@@ -20,4 +20,9 @@ public class CodableResponse<T: Codable> {
             throw error
         }
     }
+    
+    init(response: T, statusCode: HttpStatusCode) {
+        self.response = response
+        self.status = statusCode
+    }
 }
