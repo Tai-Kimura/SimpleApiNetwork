@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
+open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
     
     nonisolated(unsafe) public static var HttpHost: String = "http://localhost:3000"
     
@@ -40,7 +40,7 @@ open class SimpleApiNetwork: NSObject, URLSessionTaskDelegate {
     
     nonisolated(unsafe) private static var registeringDevice = false
     
-    private static let singleton = SimpleApiNetwork();
+    private static let singleton = SimpleApiNetworkCore();
     
     nonisolated(unsafe) private static var userAgent = getUserAgentName()
     

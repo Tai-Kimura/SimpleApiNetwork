@@ -18,7 +18,7 @@
 		B6A44BB42BD47CAC00734A06 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAB2BD47CAC00734A06 /* NetworkError.swift */; };
 		B6A44BB52BD47CAC00734A06 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAC2BD47CAC00734A06 /* NetworkResponse.swift */; };
 		B6A44BB62BD47CAC00734A06 /* SimpleApiFileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAD2BD47CAC00734A06 /* SimpleApiFileData.swift */; };
-		B6A44BB72BD47CAC00734A06 /* SimpleApiNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAE2BD47CAC00734A06 /* SimpleApiNetwork.swift */; };
+		B6A44BB72BD47CAC00734A06 /* SimpleApiNetworkCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAE2BD47CAC00734A06 /* SimpleApiNetworkCore.swift */; };
 		B6A44BB82BD47CAC00734A06 /* URLRequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BAF2BD47CAC00734A06 /* URLRequestCreator.swift */; };
 		B6A44BB92BD47CAC00734A06 /* WeakURLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BB02BD47CAC00734A06 /* WeakURLTask.swift */; };
 		D195F8B212C2FC0507AB68F6ADFF91E2 /* Pods-SimpleApiNetwork_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A0F2854D3441D43536DAD2614A1FF5 /* Pods-SimpleApiNetwork_Example-dummy.m */; };
@@ -73,7 +73,7 @@
 		B6A44BAB2BD47CAC00734A06 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		B6A44BAC2BD47CAC00734A06 /* NetworkResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		B6A44BAD2BD47CAC00734A06 /* SimpleApiFileData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleApiFileData.swift; sourceTree = "<group>"; };
-		B6A44BAE2BD47CAC00734A06 /* SimpleApiNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleApiNetwork.swift; sourceTree = "<group>"; };
+		B6A44BAE2BD47CAC00734A06 /* SimpleApiNetworkCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleApiNetworkCore.swift; sourceTree = "<group>"; };
 		B6A44BAF2BD47CAC00734A06 /* URLRequestCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestCreator.swift; sourceTree = "<group>"; };
 		B6A44BB02BD47CAC00734A06 /* WeakURLTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakURLTask.swift; sourceTree = "<group>"; };
 		B921B6860B85D08F84449E54F9D7D403 /* Pods-SimpleApiNetwork_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleApiNetwork_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 				B6A44BAB2BD47CAC00734A06 /* NetworkError.swift */,
 				B6A44BAC2BD47CAC00734A06 /* NetworkResponse.swift */,
 				B6A44BAD2BD47CAC00734A06 /* SimpleApiFileData.swift */,
-				B6A44BAE2BD47CAC00734A06 /* SimpleApiNetwork.swift */,
+				B6A44BAE2BD47CAC00734A06 /* SimpleApiNetworkCore.swift */,
 				B6A44BAF2BD47CAC00734A06 /* URLRequestCreator.swift */,
 				B6A44BB02BD47CAC00734A06 /* WeakURLTask.swift */,
 			);
@@ -401,7 +401,7 @@
 			files = (
 				B6A44BB62BD47CAC00734A06 /* SimpleApiFileData.swift in Sources */,
 				D195F8B212C2FC0507AB68F6ADFF91E2 /* Pods-SimpleApiNetwork_Example-dummy.m in Sources */,
-				B6A44BB72BD47CAC00734A06 /* SimpleApiNetwork.swift in Sources */,
+				B6A44BB72BD47CAC00734A06 /* SimpleApiNetworkCore.swift in Sources */,
 				B6A44BB52BD47CAC00734A06 /* NetworkResponse.swift in Sources */,
 				B6A44BB42BD47CAC00734A06 /* NetworkError.swift in Sources */,
 				B6A44BB32BD47CAC00734A06 /* DataExtension.swift in Sources */,

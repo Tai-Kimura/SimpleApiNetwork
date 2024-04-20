@@ -3,7 +3,7 @@
 
 import UIKit
 
-public struct SimpleApiNetworkLibrary {
+public struct SimpleApiNetwork {
     public init() {
     }
 }
