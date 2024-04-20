@@ -59,7 +59,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
         
     }
     
-    public class func sharedInstance() -> SimpleApiNetwork {
+    public class func sharedInstance() -> SimpleApiNetworkCore {
         return singleton;
     }
     
@@ -92,14 +92,14 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
     }
     
     public static func setUserAgent(userAgent: String) {
-        SimpleApiNetwork.userAgent = userAgent
+        SimpleApiNetworkCore.userAgent = userAgent
     }
     
     class func newSession(delegate: URLSessionTaskDelegate? = nil, tag: String = "com.tanosys.simple_api_network") -> URLSession {
         let operationQueue = OperationQueue()
         operationQueue.name = tag
         let session = URLSession(configuration: URLSessionConfiguration.default,
-                                 delegate: delegate == nil ? SimpleApiNetwork.sharedInstance() : delegate!, delegateQueue: operationQueue)
+                                 delegate: delegate == nil ? SimpleApiNetworkCore.sharedInstance() : delegate!, delegateQueue: operationQueue)
         return session;
     }
     
@@ -117,7 +117,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
         }
         let url = URL(string: endPoint)
         let request = isMultipart ? URLRequestCreator.requestWithMultipartHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
-        request.addValue(SimpleApiNetwork.userAgent, forHTTPHeaderField:"User-Agent")
+        request.addValue(SimpleApiNetworkCore.userAgent, forHTTPHeaderField:"User-Agent")
         if let contentType = contentType {
             request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         }else if isMultipart {
@@ -139,7 +139,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
         return session.dataTask(with: request as URLRequest, completionHandler: {
             (data, resp, err) in
             session.invalidateAndCancel()
-            SimpleApiNetwork.saveCookie()
+            SimpleApiNetworkCore.saveCookie()
             if let error = err {
                 if ((error as NSError).code != NSURLErrorCancelled) {
                     DispatchQueue.main.async(execute: {
@@ -188,7 +188,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
         }
         let url = URL(string: endPoint)
         let request = isMultipart ? URLRequestCreator.requestWithMultipartHttpRequestResource(data, sendTo: url!, method: method) : URLRequestCreator.requestWithHttpRequestResource(dataToSend: data, sendTo: url!, method: method)
-        request.addValue(SimpleApiNetwork.userAgent, forHTTPHeaderField:"User-Agent")
+        request.addValue(SimpleApiNetworkCore.userAgent, forHTTPHeaderField:"User-Agent")
         if let contentType = contentType {
             request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         }else if isMultipart {
@@ -208,7 +208,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
         do {
             let (data, resp) = try await session.data(for: request as URLRequest)
             session.invalidateAndCancel()
-            SimpleApiNetwork.saveCookie()
+            SimpleApiNetworkCore.saveCookie()
             if let httpResponse = resp as? HTTPURLResponse {
                 do {
                     return try CodableResponse<T>.init(data: data, statusCode: HttpStatusCode(rawValue: httpResponse.statusCode) ?? HttpStatusCode.unKnown)

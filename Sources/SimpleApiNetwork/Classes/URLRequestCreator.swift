@@ -28,7 +28,7 @@ open class URLRequestCreator {
     
     public static var boundary = "_insert_some_boundary_here_"
     
-    open class func requestWithHttpRequestResource(dataToSend params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
+    open class func requestWithHttpRequestResource(dataToSend params: [String :Any]!, sendTo url: URL, method: SimpleApiNetworkCore.HttpMethod = .post) -> NSMutableURLRequest {
         //JSON形式にparse
         let request = NSMutableURLRequest(url: url)
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
@@ -51,7 +51,7 @@ open class URLRequestCreator {
         return request
     }
     
-    open class func requestWithMultipartHttpRequestResource(_ params: [String :Any]!, sendTo url: URL, method: SimpleApiNetwork.HttpMethod = .post) -> NSMutableURLRequest {
+    open class func requestWithMultipartHttpRequestResource(_ params: [String :Any]!, sendTo url: URL, method: SimpleApiNetworkCore.HttpMethod = .post) -> NSMutableURLRequest {
         
         var body = NSMutableData()
         //エンコーディング
