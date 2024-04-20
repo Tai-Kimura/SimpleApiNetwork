@@ -15,6 +15,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		6908E431B06D4A0B261D34BA /* Pods_SimpleApiNetwork_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AF781C91C85B9634C3101B /* Pods_SimpleApiNetwork_Example.framework */; };
 		86D2DEF7C526D1217E266082 /* Pods_SimpleApiNetwork_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11CF55929A23A39631974D0E /* Pods_SimpleApiNetwork_Tests.framework */; };
+		B6A44BBC2BD47EC500734A06 /* SimpleApiNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A44BBB2BD47EC400734A06 /* SimpleApiNetwork.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		77AF781C91C85B9634C3101B /* Pods_SimpleApiNetwork_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleApiNetwork_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDD02F11B45BF1B4B99FDD7 /* Pods-SimpleApiNetwork_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Tests/Pods-SimpleApiNetwork_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B6A44BBB2BD47EC400734A06 /* SimpleApiNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleApiNetwork.swift; path = ../Sources/SimpleApiNetwork/SimpleApiNetwork.swift; sourceTree = "<group>"; };
 		E0DAAA3718FB31013FE31D00 /* Pods-SimpleApiNetwork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApiNetwork_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleApiNetwork_Example/Pods-SimpleApiNetwork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		FCF98D983032BA380A2FA40B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		FF994B7C69B7FFC7787083AB /* SimpleApiNetwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SimpleApiNetwork.podspec; path = ../SimpleApiNetwork.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -72,6 +74,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				B6A44BBB2BD47EC400734A06 /* SimpleApiNetwork.swift */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for SimpleApiNetwork */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -323,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A44BBC2BD47EC500734A06 /* SimpleApiNetwork.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
