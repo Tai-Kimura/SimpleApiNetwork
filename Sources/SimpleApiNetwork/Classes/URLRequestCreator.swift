@@ -88,7 +88,7 @@ open class URLRequestCreator {
                 body.append(fileData.data)
                 body.append(("\r\n" as NSString).data(using: String.Encoding.utf8.rawValue)!)
             } else if let dictionaryData = value as? [String:Any] {
-                appendDictionary(body: &body, params: dictionaryData, boundary: boundary, baseKey: baseKey + "[\(key)]")
+                appendDictionary(body: &body, params: dictionaryData, boundary: boundary, baseKey: name)
             } else if let arrayData = value as? [String] {
                 //配列パラメーター
                 for object in arrayData {
@@ -111,7 +111,7 @@ open class URLRequestCreator {
             } else if let arrayData = value as? [[String:Any]] {
                 //配列パラメーター
                 for object in arrayData {
-                    appendDictionary(body: &body, params: object, boundary: boundary, baseKey: baseKey + "[\(key)][]")
+                    appendDictionary(body: &body, params: object, boundary: boundary, baseKey: "\(name)[]")
                 }
             } else if value as? String != nil || value as? Int != nil || value as? Float != nil || value as? TimeInterval != nil || value as? Bool != nil {
                 //通常パラメーター
