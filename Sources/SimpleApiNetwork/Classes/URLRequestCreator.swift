@@ -75,10 +75,7 @@ open class URLRequestCreator {
     
     open class func appendDictionary(body: inout NSMutableData, params:[String:Any], boundary: String, baseKey: String) {
         for (key, value) in params {
-            print("baseKey: \(baseKey)")
-            print("key: \(key)")
             let name = baseKey.isEmpty ? key : "\(baseKey)[\(key)]"
-            print("name: \(name)")
             if let fileData = value as? SimpleApiFileData {
                 let dataName = "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(fileData.fileName)\"\r\n"
                 let mimeType = fileData.data.mimeType.rawValue
