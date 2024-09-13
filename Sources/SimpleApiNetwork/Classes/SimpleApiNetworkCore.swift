@@ -249,7 +249,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
     //MARK: Cookie stack
     
     open class func loadCookie() {
-        if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data, let cookies: [HTTPCookie] = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [], from: cookiesData)) as? [HTTPCookie] {
+        if let cookiesData: Data = Util.get(key: "savedHttpCookie") as? Data, let cookies: [HTTPCookie] = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, HTTPCookie.self], from: cookiesData)) as? [HTTPCookie] {
             for  cookie in cookies {
                 HTTPCookieStorage.shared.setCookie(cookie)
             }
