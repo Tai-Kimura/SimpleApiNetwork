@@ -210,6 +210,16 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
             session.invalidateAndCancel()
             SimpleApiNetworkCore.saveCookie()
             if let httpResponse = resp as? HTTPURLResponse {
+                let statusCode = httpResponse.statusCode
+                if !(200...299).contains(statusCode) {
+                    await MainActor.run {
+                        NotificationCenter.default.post(
+                            name: Notification.Name("SimpleApiNetwork.httpError"),
+                            object: nil,
+                            userInfo: ["statusCode": statusCode, "data": data, "url": request.url?.absoluteString ?? ""]
+                        )
+                    }
+                }
                 do {
                     return try CodableResponse<T>.init(data: data, statusCode: HttpStatusCode(rawValue: httpResponse.statusCode) ?? HttpStatusCode.unKnown)
                 } catch let error {
