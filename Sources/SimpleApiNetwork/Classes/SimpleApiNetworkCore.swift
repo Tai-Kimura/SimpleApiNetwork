@@ -219,6 +219,7 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
                             userInfo: ["statusCode": statusCode, "data": data, "url": request.url?.absoluteString ?? ""]
                         )
                     }
+                    throw HttpError(statusCode: statusCode, data: data)
                 }
                 do {
                     return try CodableResponse<T>.init(data: data, statusCode: HttpStatusCode(rawValue: httpResponse.statusCode) ?? HttpStatusCode.unKnown)
@@ -312,11 +313,19 @@ open class SimpleApiNetworkCore: NSObject, URLSessionTaskDelegate {
 
 
 public enum HttpStatusCode: Int, Sendable {
-    case serverMaintenance = 503
     case requestSuccess = 200
+    case notAuthorized = 401
+    case paymentRequired = 402
+    case forbidden = 403
     case notFound = 404
     case invalidDomain = 410
-    case notAuthorized = 401
+    case tooManyRequests = 429
     case serverError = 500
+    case serverMaintenance = 503
     case unKnown = -1
+}
+
+public struct HttpError: Error {
+    public let statusCode: Int
+    public let data: Data?
 }
